@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://dg5glc5wqk6r0"]
+
+[ext_resource type="Script" path="res://Scenes/System/test.gd" id="1_jssvx"]
+[ext_resource type="PackedScene" uid="uid://00066s4qg7gm" path="res://Scenes/Objects/block.tscn" id="1_uiq2x"]
+[ext_resource type="PackedScene" uid="uid://di563ikhs1x8e" path="res://Scenes/Objects/main_block.tscn" id="2_sw0tm"]
+[ext_resource type="PackedScene" uid="uid://lxqjsbi2wopb" path="res://Scenes/Objects/enemy.tscn" id="3_d0rbx"]
+
+[node name="test" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_jssvx")
+
+[node name="main_block" parent="." instance=ExtResource("2_sw0tm")]
+position = Vector2(221, 220)
+
+[node name="block" parent="." instance=ExtResource("1_uiq2x")]
+position = Vector2(93, 219)
+
+[node name="block2" parent="." instance=ExtResource("1_uiq2x")]
+position = Vector2(118, 219)
+
+[node name="block3" parent="." instance=ExtResource("1_uiq2x")]
+position = Vector2(66, 219)
+
+[node name="block4" parent="." instance=ExtResource("1_uiq2x")]
+position = Vector2(172, 219)
+
+[node name="block5" parent="." instance=ExtResource("1_uiq2x")]
+position = Vector2(193, 219)
+
+[node name="block6" parent="." instance=ExtResource("1_uiq2x")]
+position = Vector2(145, 219)
+
+[node name="enemy" parent="." instance=ExtResource("3_d0rbx")]
+position = Vector2(65, 168)
+
+[node name="Grid" type="Node2D" parent="."]
+position = Vector2(220, 220)

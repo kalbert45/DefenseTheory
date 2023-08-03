@@ -1,0 +1,301 @@
+[gd_scene load_steps=24 format=3 uid="uid://dnmtjykokoo26"]
+
+[ext_resource type="Script" path="res://Scenes/System/main.gd" id="1_gatrr"]
+[ext_resource type="PackedScene" uid="uid://di563ikhs1x8e" path="res://Scenes/Objects/main_block.tscn" id="2_38f8e"]
+[ext_resource type="Texture2D" uid="uid://5gskgbmskp2u" path="res://Assets/Sprites/empty_block.png" id="2_ii6wf"]
+[ext_resource type="Shader" path="res://Scenes/System/shadows.gdshader" id="3_dp7xj"]
+[ext_resource type="Texture2D" uid="uid://chaw3wh8vuobq" path="res://Assets/Sprites/empty_block_over.png" id="3_nk0su"]
+[ext_resource type="Texture2D" uid="uid://dd8rfv12uvhc5" path="res://Assets/Sprites/empty_block_progress.png" id="3_yubj2"]
+[ext_resource type="Script" path="res://Scenes/System/GrowProgress.gd" id="4_jnwco"]
+[ext_resource type="Texture2D" uid="uid://dmgxru1nf77ry" path="res://Assets/Sprites/clockwise_arrow.png" id="6_4dvh2"]
+[ext_resource type="Texture2D" uid="uid://bseaqhhjjkm2f" path="res://Assets/Sprites/clockwise_arrow_hovered.png" id="9_w2vbm"]
+[ext_resource type="Texture2D" uid="uid://cpdb77glpycss" path="res://Assets/Sprites/clockwise_arrow_over2.png" id="10_2yeq4"]
+[ext_resource type="Texture2D" uid="uid://bjmasmxqfol2l" path="res://Assets/Sprites/clockwise_arrow_under2.png" id="10_85aew"]
+[ext_resource type="Texture2D" uid="uid://52sjdi5e2a4x" path="res://Assets/Sprites/clockwise_arrow_progress2.png" id="11_omuxx"]
+[ext_resource type="Texture2D" uid="uid://7w844mdjltu6" path="res://Assets/Sprites/clockwise_arrow_over.png" id="12_t6xgh"]
+[ext_resource type="Texture2D" uid="uid://bn0x7al4m48nw" path="res://Assets/Sprites/clockwise_arrow_progress.png" id="13_1q2w2"]
+[ext_resource type="Texture2D" uid="uid://cipa7iuc5m8r6" path="res://Assets/Sprites/clockwise_arrow_under.png" id="13_2ujis"]
+
+[sub_resource type="Curve2D" id="Curve2D_iladu"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -10, -10, 0, 0, 0, 0, 450, -10, 0, 0, 0, 0, 450, 450, 0, 0, 0, 0, -10, 450, 0, 0, 0, 0, -10, -10)
+}
+point_count = 5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f00lw"]
+resource_local_to_scene = true
+shader = ExtResource("3_dp7xj")
+shader_parameter/background_color = Color(0.721569, 0.709804, 0.72549, 1)
+shader_parameter/shadow_color = Color(0.52549, 0.505882, 0.533333, 1)
+shader_parameter/offset_in_pixels = Vector2(3, 3)
+
+[sub_resource type="Animation" id="Animation_pag7m"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_dwqej"]
+resource_name = "stretch"
+length = 0.4
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0, 0.0376226, 1.2, -0.1, -0.015854, 0.3, -0.000194311, 1, 0, 0.036193, 0.25, 0),
+"times": PackedFloat32Array(0, 0.1, 0.4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0, 0.0383372, 1.2, -0.25, 0, 0.1, -0.0344375, 1, 0, 0.0404816, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3, 0.4)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8fqew"]
+_data = {
+"RESET": SubResource("Animation_pag7m"),
+"stretch": SubResource("Animation_dwqej")
+}
+
+[sub_resource type="Animation" id="Animation_3bwd4"]
+resource_name = "stretch"
+length = 0.4
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.9, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.9, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.4)
+}
+
+[sub_resource type="Animation" id="Animation_e87os"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_35scr"]
+_data = {
+"RESET": SubResource("Animation_e87os"),
+"stretch": SubResource("Animation_3bwd4")
+}
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_gatrr")
+
+[node name="Timers" type="Node2D" parent="."]
+
+[node name="SpawnTimer" type="Timer" parent="Timers"]
+wait_time = 3.0
+
+[node name="GrowCDTimer" type="Timer" parent="Timers"]
+wait_time = 3.0
+one_shot = true
+
+[node name="TurnCDTimer" type="Timer" parent="Timers"]
+wait_time = 5.0
+one_shot = true
+
+[node name="SpawnPoints" type="Path2D" parent="."]
+curve = SubResource("Curve2D_iladu")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="SpawnPoints"]
+position = Vector2(-10, -10)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Grid" type="Node2D" parent="."]
+position = Vector2(220, 220)
+
+[node name="main_block" parent="Grid" instance=ExtResource("2_38f8e")]
+
+[node name="Particles" type="Node2D" parent="."]
+
+[node name="Shadows" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_f00lw")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 440.0
+offset_bottom = 440.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 440.0
+offset_bottom = 440.0
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.52549, 0.505882, 0.533333, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -440.0
+offset_bottom = -420.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.52549, 0.505882, 0.533333, 1)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="UI" node_paths=PackedStringArray("timer")]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 408.0
+offset_right = 248.0
+offset_bottom = 448.0
+pivot_offset = Vector2(12, 12)
+mouse_filter = 2
+value = 100.0
+fill_mode = 4
+texture_under = ExtResource("2_ii6wf")
+texture_over = ExtResource("3_nk0su")
+texture_progress = ExtResource("3_yubj2")
+tint_over = Color(1, 1, 1, 0)
+script = ExtResource("4_jnwco")
+timer = NodePath("../../Timers/GrowCDTimer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/TextureProgressBar"]
+libraries = {
+"": SubResource("AnimationLibrary_8fqew")
+}
+
+[node name="LeftButton" type="TextureButton" parent="UI"]
+layout_mode = 0
+offset_left = 82.0
+offset_top = 397.0
+offset_right = 130.0
+offset_bottom = 445.0
+pivot_offset = Vector2(24, 24)
+texture_normal = ExtResource("6_4dvh2")
+texture_hover = ExtResource("9_w2vbm")
+flip_h = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="UI/LeftButton" node_paths=PackedStringArray("timer")]
+offset_right = 40.0
+offset_bottom = 40.0
+value = 50.0
+fill_mode = 1
+texture_under = ExtResource("10_85aew")
+texture_over = ExtResource("10_2yeq4")
+texture_progress = ExtResource("11_omuxx")
+tint_over = Color(1, 1, 1, 0)
+script = ExtResource("4_jnwco")
+timer = NodePath("../../../Timers/TurnCDTimer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/LeftButton/TextureProgressBar"]
+libraries = {
+"": SubResource("AnimationLibrary_35scr")
+}
+
+[node name="RightButton" type="TextureButton" parent="UI"]
+layout_mode = 0
+offset_left = 310.0
+offset_top = 397.0
+offset_right = 358.0
+offset_bottom = 445.0
+pivot_offset = Vector2(24, 24)
+texture_normal = ExtResource("6_4dvh2")
+texture_hover = ExtResource("9_w2vbm")
+ignore_texture_size = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="UI/RightButton" node_paths=PackedStringArray("timer")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_under = ExtResource("13_2ujis")
+texture_over = ExtResource("12_t6xgh")
+texture_progress = ExtResource("13_1q2w2")
+tint_over = Color(1, 1, 1, 0)
+script = ExtResource("4_jnwco")
+timer = NodePath("../../../Timers/TurnCDTimer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/RightButton/TextureProgressBar"]
+libraries = {
+"": SubResource("AnimationLibrary_35scr")
+}
+
+[connection signal="timeout" from="Timers/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="timeout" from="Timers/GrowCDTimer" to="." method="_on_grow_cd_timer_timeout"]
+[connection signal="timeout" from="Timers/TurnCDTimer" to="." method="_on_turn_cd_timer_timeout"]
+[connection signal="pressed" from="UI/LeftButton" to="." method="_on_left_button_pressed"]
+[connection signal="pressed" from="UI/RightButton" to="." method="_on_right_button_pressed"]
