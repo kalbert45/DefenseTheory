@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dnmtjykokoo26"]
+[gd_scene load_steps=31 format=3 uid="uid://dnmtjykokoo26"]
 
 [ext_resource type="Script" path="res://Scenes/System/main.gd" id="1_gatrr"]
 [ext_resource type="PackedScene" uid="uid://di563ikhs1x8e" path="res://Scenes/Objects/main_block.tscn" id="2_38f8e"]
@@ -15,6 +15,12 @@
 [ext_resource type="Texture2D" uid="uid://7w844mdjltu6" path="res://Assets/Sprites/clockwise_arrow_over.png" id="12_t6xgh"]
 [ext_resource type="Texture2D" uid="uid://bn0x7al4m48nw" path="res://Assets/Sprites/clockwise_arrow_progress.png" id="13_1q2w2"]
 [ext_resource type="Texture2D" uid="uid://cipa7iuc5m8r6" path="res://Assets/Sprites/clockwise_arrow_under.png" id="13_2ujis"]
+[ext_resource type="Texture2D" uid="uid://i4akvavg7xyt" path="res://Assets/Sprites/heart.png" id="16_5hr7g"]
+[ext_resource type="Shader" path="res://Scenes/Objects/outline.gdshader" id="17_ei6oq"]
+[ext_resource type="FontFile" uid="uid://btplbvo82n1po" path="res://Assets/Fonts/m5x7.ttf" id="17_lrobj"]
+[ext_resource type="Texture2D" uid="uid://bn6f3cp0ht3i8" path="res://Assets/Sprites/exp_under.png" id="18_hs1af"]
+[ext_resource type="Texture2D" uid="uid://cc6nntstp17e8" path="res://Assets/Sprites/exp_progress.png" id="19_30ptx"]
+[ext_resource type="Script" path="res://Scenes/System/ExpBar.gd" id="20_t4giw"]
 
 [sub_resource type="Curve2D" id="Curve2D_iladu"]
 _data = {
@@ -25,8 +31,8 @@ point_count = 5
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f00lw"]
 resource_local_to_scene = true
 shader = ExtResource("3_dp7xj")
-shader_parameter/background_color = Color(0.721569, 0.709804, 0.72549, 1)
-shader_parameter/shadow_color = Color(0.52549, 0.505882, 0.533333, 1)
+shader_parameter/background_color = Color(0.968627, 1, 0.682353, 1)
+shader_parameter/shadow_color = Color(0.847059, 0.74902, 0.847059, 1)
 shader_parameter/offset_in_pixels = Vector2(3, 3)
 
 [sub_resource type="Animation" id="Animation_pag7m"]
@@ -34,50 +40,50 @@ length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale:x")
+tracks/0/path = NodePath(".:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(206, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale:y")
+tracks/1/path = NodePath(".:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(408, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 
 [sub_resource type="Animation" id="Animation_dwqej"]
 resource_name = "stretch"
-length = 0.4
+length = 0.3
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale:x")
+tracks/0/path = NodePath(".:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(1, -0.25, 0, 0, 0.0376226, 1.2, -0.1, -0.015854, 0.3, -0.000194311, 1, 0, 0.036193, 0.25, 0),
-"times": PackedFloat32Array(0, 0.1, 0.4)
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(206, -0.25, 0, 0.25, 0, 206, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale:y")
+tracks/1/path = NodePath(".:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(1, -0.25, 0, 0, 0.0383372, 1.2, -0.25, 0, 0.1, -0.0344375, 1, 0, 0.0404816, 0.25, 0),
-"times": PackedFloat32Array(0, 0.3, 0.4)
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(402, -0.25, 0, 0.25, 0, 408, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8fqew"]
@@ -86,55 +92,33 @@ _data = {
 "stretch": SubResource("Animation_dwqej")
 }
 
-[sub_resource type="Animation" id="Animation_3bwd4"]
-resource_name = "stretch"
-length = 0.4
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("..:scale:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.9, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.2, 0.4)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("..:scale:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.9, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.2, 0.4)
-}
-
 [sub_resource type="Animation" id="Animation_e87os"]
 length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("..:scale:x")
+tracks/0/path = NodePath("..:position:y")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(397, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("..:scale:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
+
+[sub_resource type="Animation" id="Animation_3bwd4"]
+resource_name = "stretch"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(404, -0.25, 0, 0.25, 0, 397, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_35scr"]
@@ -143,20 +127,29 @@ _data = {
 "stretch": SubResource("Animation_3bwd4")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_owxei"]
+shader = ExtResource("17_ei6oq")
+shader_parameter/color = Color(0.454902, 0.337255, 0.607843, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 1
+shader_parameter/inside = false
+shader_parameter/add_margins = false
+
 [node name="main" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_gatrr")
 
 [node name="Timers" type="Node2D" parent="."]
 
 [node name="SpawnTimer" type="Timer" parent="Timers"]
-wait_time = 3.0
+wait_time = 2.0
 
 [node name="GrowCDTimer" type="Timer" parent="Timers"]
-wait_time = 3.0
+wait_time = 2.0
 one_shot = true
 
 [node name="TurnCDTimer" type="Timer" parent="Timers"]
-wait_time = 5.0
+wait_time = 3.0
 one_shot = true
 
 [node name="SpawnPoints" type="Path2D" parent="."]
@@ -202,7 +195,7 @@ offset_top = -40.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
-color = Color(0.52549, 0.505882, 0.533333, 1)
+color = Color(0.847059, 0.74902, 0.847059, 1)
 
 [node name="ColorRect2" type="ColorRect" parent="UI"]
 layout_mode = 1
@@ -215,15 +208,15 @@ offset_bottom = -420.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
-color = Color(0.52549, 0.505882, 0.533333, 1)
+color = Color(0.847059, 0.74902, 0.847059, 1)
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="UI" node_paths=PackedStringArray("timer")]
 layout_mode = 0
-offset_left = 208.0
+offset_left = 206.0
 offset_top = 408.0
-offset_right = 248.0
+offset_right = 246.0
 offset_bottom = 448.0
-pivot_offset = Vector2(12, 12)
+pivot_offset = Vector2(14, 14)
 mouse_filter = 2
 value = 100.0
 fill_mode = 4
@@ -251,6 +244,7 @@ texture_hover = ExtResource("9_w2vbm")
 flip_h = true
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="UI/LeftButton" node_paths=PackedStringArray("timer")]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 value = 50.0
@@ -258,6 +252,7 @@ fill_mode = 1
 texture_under = ExtResource("10_85aew")
 texture_over = ExtResource("10_2yeq4")
 texture_progress = ExtResource("11_omuxx")
+texture_progress_offset = Vector2(6, 0)
 tint_over = Color(1, 1, 1, 0)
 script = ExtResource("4_jnwco")
 timer = NodePath("../../../Timers/TurnCDTimer")
@@ -282,9 +277,11 @@ ignore_texture_size = true
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+value = 50.0
 texture_under = ExtResource("13_2ujis")
 texture_over = ExtResource("12_t6xgh")
 texture_progress = ExtResource("13_1q2w2")
+texture_progress_offset = Vector2(6, 0)
 tint_over = Color(1, 1, 1, 0)
 script = ExtResource("4_jnwco")
 timer = NodePath("../../../Timers/TurnCDTimer")
@@ -293,6 +290,66 @@ timer = NodePath("../../../Timers/TurnCDTimer")
 libraries = {
 "": SubResource("AnimationLibrary_35scr")
 }
+
+[node name="Lives" type="HBoxContainer" parent="UI"]
+layout_direction = 3
+layout_mode = 0
+offset_right = 76.0
+offset_bottom = 24.0
+theme_override_constants/separation = -11
+
+[node name="TextureRect2" type="TextureRect" parent="UI/Lives"]
+layout_mode = 2
+texture = ExtResource("16_5hr7g")
+stretch_mode = 3
+
+[node name="TextureRect3" type="TextureRect" parent="UI/Lives"]
+layout_mode = 2
+texture = ExtResource("16_5hr7g")
+stretch_mode = 3
+
+[node name="TextureRect4" type="TextureRect" parent="UI/Lives"]
+layout_mode = 2
+texture = ExtResource("16_5hr7g")
+stretch_mode = 3
+
+[node name="TextureRect5" type="TextureRect" parent="UI/Lives"]
+layout_mode = 2
+texture = ExtResource("16_5hr7g")
+stretch_mode = 3
+
+[node name="TextureRect6" type="TextureRect" parent="UI/Lives"]
+layout_mode = 2
+texture = ExtResource("16_5hr7g")
+stretch_mode = 3
+
+[node name="Level" type="RichTextLabel" parent="UI"]
+material = SubResource("ShaderMaterial_owxei")
+clip_contents = false
+layout_mode = 0
+offset_left = 10.0
+offset_top = 3.0
+offset_right = 90.0
+offset_bottom = 43.0
+theme_override_colors/default_color = Color(0.968627, 1, 0.682353, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("17_lrobj")
+theme_override_font_sizes/normal_font_size = 16
+text = "LVL 1"
+autowrap_mode = 0
+
+[node name="ExpBar" type="TextureProgressBar" parent="UI"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 7.0
+offset_right = 359.0
+offset_bottom = 47.0
+texture_under = ExtResource("18_hs1af")
+texture_progress = ExtResource("19_30ptx")
+texture_progress_offset = Vector2(2, 2)
+script = ExtResource("20_t4giw")
 
 [connection signal="timeout" from="Timers/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="Timers/GrowCDTimer" to="." method="_on_grow_cd_timer_timeout"]

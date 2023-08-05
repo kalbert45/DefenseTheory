@@ -1,21 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://dhv67jqqro4n6"]
+[gd_scene load_steps=4 format=3 uid="uid://dhv67jqqro4n6"]
 
 [ext_resource type="Script" path="res://Scenes/Objects/break_particles.gd" id="1_ml7ao"]
+[ext_resource type="Texture2D" uid="uid://bwwaar1yvhwo7" path="res://Assets/Sprites/green_particle.png" id="2_32k8m"]
 
 [sub_resource type="Curve" id="Curve_0arvg"]
-min_value = 1.0
-max_value = 10.0
-_data = [Vector2(0, 6.02105), 0.0, 0.0, 0, 0, Vector2(0.989011, 1.47368), 0.0, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0, 5.07368), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [node name="BreakParticles" type="Node2D"]
 script = ExtResource("1_ml7ao")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 emitting = false
-lifetime = 0.25
+lifetime = 0.3
 one_shot = true
 explosiveness = 1.0
+texture = ExtResource("2_32k8m")
 spread = 180.0
 gravity = Vector2(0, 0)
 initial_velocity_min = 90.91
@@ -23,7 +23,6 @@ initial_velocity_max = 90.91
 damping_min = 44.444
 damping_max = 44.444
 scale_amount_curve = SubResource("Curve_0arvg")
-color = Color(0.929412, 0.882353, 0.619608, 1)
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true

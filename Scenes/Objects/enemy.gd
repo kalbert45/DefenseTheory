@@ -1,6 +1,8 @@
 extends PathFollow2D
 
 const SPEED = 25
+var color = Color('ffb3cb')
+var exp = 1
 
 func _ready():
 	pass

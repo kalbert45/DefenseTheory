@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://lxqjsbi2wopb"]
+[gd_scene load_steps=6 format=3 uid="uid://lxqjsbi2wopb"]
 
 [ext_resource type="Texture2D" uid="uid://binh1bwjinj1f" path="res://Assets/Sprites/enemy.png" id="1_8ycif"]
 [ext_resource type="Script" path="res://Scenes/Objects/enemy.gd" id="1_rtv40"]
@@ -9,12 +9,15 @@ shader = ExtResource("2_xlj2h")
 shader_parameter/color = Color(0.372549, 0.333333, 0.415686, 1)
 shader_parameter/mixture = 1.0
 
-[node name="enemy" type="PathFollow2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_die6y"]
+radius = 3.0
+height = 10.0
+
+[node name="enemy" type="PathFollow2D" groups=["enemies"]]
 loop = false
 script = ExtResource("1_rtv40")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 0.5)
 texture = ExtResource("1_8ycif")
 
 [node name="shadow" type="Sprite2D" parent="Sprite2D"]
@@ -27,8 +30,9 @@ texture = ExtResource("1_8ycif")
 
 [node name="StaticBody2D" type="Area2D" parent="."]
 collision_layer = 2
-collision_mask = 2
+collision_mask = 0
 input_pickable = false
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(4, 0, -4, -4, -4, 4)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_die6y")

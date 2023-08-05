@@ -56,4 +56,4 @@ right_click={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-environment/defaults/default_clear_color=Color(0.721569, 0.709804, 0.72549, 1)
+environment/defaults/default_clear_color=Color(0.968627, 1, 0.682353, 1)

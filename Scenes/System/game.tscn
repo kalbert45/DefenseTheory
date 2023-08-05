@@ -1,7 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://cl222ifn20j73"]
+[gd_scene load_steps=3 format=3 uid="uid://cl222ifn20j73"]
 
+[ext_resource type="Script" path="res://Scenes/System/game.gd" id="1_3uynm"]
 [ext_resource type="PackedScene" uid="uid://dnmtjykokoo26" path="res://Scenes/System/main.tscn" id="1_qcehl"]
 
 [node name="game" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_3uynm")
 
 [node name="main" parent="." instance=ExtResource("1_qcehl")]

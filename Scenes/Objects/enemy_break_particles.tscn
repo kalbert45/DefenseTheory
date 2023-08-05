@@ -1,15 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://bs0uy227fdl16"]
 
-[ext_resource type="Script" path="res://Scenes/Objects/break_particles.gd" id="1_wbj03"]
+[ext_resource type="Script" path="res://Scenes/Objects/enemy_break_particles.gd" id="1_dpalh"]
 
 [sub_resource type="Curve" id="Curve_0arvg"]
 min_value = 1.0
 max_value = 10.0
-_data = [Vector2(0, 6.02105), 0.0, 0.0, 0, 0, Vector2(0.989011, 1.47368), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 4.97895), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [node name="BreakParticles" type="Node2D"]
-script = ExtResource("1_wbj03")
+script = ExtResource("1_dpalh")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 emitting = false

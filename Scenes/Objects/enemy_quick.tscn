@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://blwbevi5gvkvy"]
+
+[ext_resource type="Script" path="res://Scenes/Objects/enemy_quick.gd" id="1_5en4m"]
+[ext_resource type="Texture2D" uid="uid://gpb67om15yqa" path="res://Assets/Sprites/enemy_quick.png" id="2_6b6em"]
+[ext_resource type="Texture2D" uid="uid://binh1bwjinj1f" path="res://Assets/Sprites/enemy.png" id="2_oowyx"]
+[ext_resource type="Shader" path="res://Scenes/Objects/solid_color.gdshader" id="3_c0psj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xktom"]
+shader = ExtResource("3_c0psj")
+shader_parameter/color = Color(0.372549, 0.333333, 0.415686, 1)
+shader_parameter/mixture = 1.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_die6y"]
+radius = 3.0
+height = 10.0
+
+[node name="enemy_quick" type="PathFollow2D" groups=["enemies"]]
+loop = false
+script = ExtResource("1_5en4m")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_6b6em")
+
+[node name="shadow" type="Sprite2D" parent="Sprite2D"]
+visible = false
+show_behind_parent = true
+z_index = -1
+material = SubResource("ShaderMaterial_xktom")
+position = Vector2(3, 3)
+texture = ExtResource("2_oowyx")
+
+[node name="StaticBody2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_die6y")

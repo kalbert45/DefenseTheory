@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://di563ikhs1x8e"]
+[gd_scene load_steps=15 format=3 uid="uid://di563ikhs1x8e"]
 
 [ext_resource type="Script" path="res://Scenes/Objects/main_block.gd" id="1_amhtn"]
 [ext_resource type="Texture2D" uid="uid://d4lxe6nydd7sl" path="res://Assets/Sprites/main_block.png" id="1_v0xge"]
@@ -153,6 +153,9 @@ _data = {
 "spawn": SubResource("Animation_t0uju")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vg4p8"]
+size = Vector2(14, 14)
+
 [node name="main_block" type="Node2D"]
 script = ExtResource("1_amhtn")
 
@@ -181,6 +184,15 @@ libraries = {
 "": SubResource("AnimationLibrary_vwrot")
 }
 
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_vg4p8")
+
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
