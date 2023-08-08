@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Augment" load_steps=2 format=3 uid="uid://ibhpscljvv0q"]
+
+[ext_resource type="Script" path="res://Assets/Resources/Augment_Description.gd" id="1_rnpih"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_rnpih")
+name = "GARBAGE COLLECTION"
+description = "Blocks can drop orbs upon breaking"
+secondary_d = "Chance is increased by 2%"
+limit = 3
+count = 0

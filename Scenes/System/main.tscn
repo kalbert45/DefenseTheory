@@ -1,6 +1,7 @@
-[gd_scene load_steps=31 format=3 uid="uid://dnmtjykokoo26"]
+[gd_scene load_steps=32 format=3 uid="uid://dnmtjykokoo26"]
 
 [ext_resource type="Script" path="res://Scenes/System/main.gd" id="1_gatrr"]
+[ext_resource type="Script" path="res://Scenes/System/StageHandler.gd" id="2_2s61n"]
 [ext_resource type="PackedScene" uid="uid://di563ikhs1x8e" path="res://Scenes/Objects/main_block.tscn" id="2_38f8e"]
 [ext_resource type="Texture2D" uid="uid://5gskgbmskp2u" path="res://Assets/Sprites/empty_block.png" id="2_ii6wf"]
 [ext_resource type="Shader" path="res://Scenes/System/shadows.gdshader" id="3_dp7xj"]
@@ -139,17 +140,20 @@ shader_parameter/add_margins = false
 process_mode = 1
 script = ExtResource("1_gatrr")
 
+[node name="Node2D" type="Node2D" parent="."]
+
 [node name="Timers" type="Node2D" parent="."]
+script = ExtResource("2_2s61n")
 
 [node name="SpawnTimer" type="Timer" parent="Timers"]
 wait_time = 2.0
 
 [node name="GrowCDTimer" type="Timer" parent="Timers"]
-wait_time = 2.0
+wait_time = 4.0
 one_shot = true
 
 [node name="TurnCDTimer" type="Timer" parent="Timers"]
-wait_time = 3.0
+wait_time = 5.0
 one_shot = true
 
 [node name="SpawnPoints" type="Path2D" parent="."]
@@ -195,7 +199,7 @@ offset_top = -40.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
-color = Color(0.847059, 0.74902, 0.847059, 1)
+color = Color(0.454902, 0.337255, 0.607843, 1)
 
 [node name="ColorRect2" type="ColorRect" parent="UI"]
 layout_mode = 1
@@ -208,7 +212,20 @@ offset_bottom = -420.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
-color = Color(0.847059, 0.74902, 0.847059, 1)
+color = Color(0.454902, 0.337255, 0.607843, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="UI"]
+layout_mode = 0
+offset_right = 5.0
+offset_bottom = 440.0
+color = Color(0.454902, 0.337255, 0.607843, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="UI"]
+layout_mode = 0
+offset_left = 435.0
+offset_right = 440.0
+offset_bottom = 440.0
+color = Color(0.454902, 0.337255, 0.607843, 1)
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="UI" node_paths=PackedStringArray("timer")]
 layout_mode = 0

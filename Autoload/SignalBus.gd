@@ -8,4 +8,4 @@ signal lose_life
 signal lose_game
 
 signal level_up(level)
-signal augment_selected
+signal augment_selected(augment)

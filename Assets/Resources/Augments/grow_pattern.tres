@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Augment" load_steps=3 format=3 uid="uid://ds8cjscq8kx0y"]
+
+[ext_resource type="Texture2D" uid="uid://yxkf8c1j0c23" path="res://Assets/Sprites/Augments/compact_augment.png" id="1_f0bn0"]
+[ext_resource type="Script" path="res://Assets/Resources/Augment_Description.gd" id="2_fnqsx"]
+
+[resource]
+script = ExtResource("2_fnqsx")
+pic = ExtResource("1_f0bn0")
+name = "DYNAMIC PARTITIONS"
+description = "Create more blocks"
+secondary_d = "Create more blocks"
+limit = -1
+count = 0

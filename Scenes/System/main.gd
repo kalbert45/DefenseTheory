@@ -24,6 +24,9 @@ var grow_cd = false # used for grow cd
 var lives = 5
 var level = 1
 var _tween
+#----------------------------------------------
+# augment variables
+var deep_clean_count = 0
 #------------------------------------------------
 # flood fill
 var _flood_array = []
@@ -38,9 +41,51 @@ func _ready():
 	_grid = Grid.new(grid_size, Vector2(21,21))
 	grid_to_block[Vector2.ZERO] = $Grid/main_block
 	
-func augment_selected():
+
+# some augment functionalities
+func augment_selected(augment):
 	level += 1
 	$UI/Level.text = 'LVL ' + str(level)
+	$UI/ExpBar.set_max_exp(level)
+	
+	match augment:
+		Augments.AUGMENTS.GROW_CD_REDUC:
+			$Timers/GrowCDTimer.wait_time *= 0.8
+		Augments.AUGMENTS.ROTATE_CD_REDUC:
+			$Timers/TurnCDTimer.wait_time *= 0.75
+		Augments.AUGMENTS.COMPACT:
+			_grid = Grid.new(grid_size, Vector2(17,17))
+			for v in grid_to_block.keys():
+				if v == Vector2.ZERO:
+					continue
+				grid_to_block[v].tween_to(_grid.calculate_map_position(v))
+		Augments.AUGMENTS.EXTEND:
+			Global.play_sfx('grow.wav', 1.0, true)
+			var extension = Augments.augment_resources[augment].count
+			grid_size = Vector2(grid_size.x + 2*extension, grid_size.y + 2*extension)
+			_grid = Grid.new(grid_size, _grid.cell_size)
+			
+			# create max layer
+			var max_layer = 1
+			for block in $Grid.get_children():
+				max_layer = max(max_layer, block.grid_p.x)
+				max_layer = max(max_layer, block.grid_p.y)
+			# spawn blocks in max layer
+			var positions = []
+			for i in range(-max_layer, max_layer+1):
+				positions.append(Vector2(i, max_layer))
+				positions.append(Vector2(i, -max_layer))
+				positions.append(Vector2(max_layer, i))
+				positions.append(Vector2(-max_layer, i))
+			for p in positions:
+				if grid_to_block.has(p):
+					grid_to_block[p].grow()
+					continue
+				var new_block = BLOCK_SCENE.instantiate()
+				new_block.grid_p = p
+				new_block.position = _grid.calculate_map_position(p)
+				grid_to_block[p] = new_block
+				$Grid.add_child(new_block)
 
 func set_turning():
 	turning = false
@@ -48,6 +93,7 @@ func set_turning():
 func turn_clockwise():
 	if turning:
 		return
+	check_deep_clean()
 	Global.play_sfx('snap.wav', -2, true)
 	turning = true
 	_tween = get_tree().create_tween()
@@ -57,11 +103,22 @@ func turn_clockwise():
 func turn_counterclockwise():
 	if turning:
 		return
+	check_deep_clean()
 	Global.play_sfx('snap.wav', -2, true)
 	turning = true
 	_tween = get_tree().create_tween()
 	_tween.tween_property($Grid, 'rotation_degrees', $Grid.rotation_degrees - 90, 0.6).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	_tween.tween_callback(emit_signal.bind('done_turning'))
+	
+func check_deep_clean():
+	var resource = Augments.augment_resources[Augments.AUGMENTS.PENTAGRAM]
+	if resource.count == 0:
+		return
+	deep_clean_count += 1
+	var quota = 11 - resource.count
+	if deep_clean_count >= quota:
+		deep_clean_count = 0
+		clear_enemies()
 	
 # if position is open, create a new block. else, call grow on the block.
 func grow(grid_p):
@@ -124,6 +181,15 @@ func break_enemy(enemy):
 	$Particles.add_child(particles)
 	$UI/ExpBar.gain_exp(enemy.exp)
 	enemy.get_parent().queue_free()
+	
+func clear_enemies():
+	Global.play_sfx('kick.wav', 4, true)
+	for enemy in get_tree().get_nodes_in_group('enemies'):
+		var particles = ENEMY_PARTICLE_SCENE.instantiate()
+		particles.global_position = enemy.global_position
+		particles.color = enemy.color
+		$Particles.add_child(particles)
+		enemy.get_parent().queue_free()
 			
 # remove block. add effect.
 func break_block(grid_p):
@@ -185,8 +251,6 @@ func spawn_enemy():
 	var path = enemy.create_path(start_p, end_p)
 	$Enemies.add_child(path)
 	path.add_child(enemy)
-	
-
 	
 func _on_spawn_timer_timeout():
 	spawn_enemy()

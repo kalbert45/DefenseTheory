@@ -17,6 +17,8 @@ func set_max_exp(level):
 		1:
 			max_value = 10
 		2:
-			max_value = 20
+			max_value = 10
 		3:
-			max_value = 40
+			max_value = 10
+		_:
+			max_value = 10

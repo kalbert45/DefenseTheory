@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Augment" load_steps=3 format=3 uid="uid://d3pn630ahtuxn"]
+
+[ext_resource type="Texture2D" uid="uid://yxkf8c1j0c23" path="res://Assets/Sprites/Augments/compact_augment.png" id="1_50qhv"]
+[ext_resource type="Script" path="res://Assets/Resources/Augment_Description.gd" id="2_gg6go"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("2_gg6go")
+pic = ExtResource("1_50qhv")
+name = "COMPACTION"
+description = "Decreases space between blocks"
+secondary_d = ""
+limit = 1
+count = 0

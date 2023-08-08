@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Augment" load_steps=2 format=3 uid="uid://cs4223pn4mh5"]
+
+[ext_resource type="Script" path="res://Assets/Resources/Augment_Description.gd" id="1_2v242"]
+
+[resource]
+script = ExtResource("1_2v242")
+name = "FACTORY RESET"
+description = "Win the game"
+secondary_d = ""
+limit = -1
+count = 0
