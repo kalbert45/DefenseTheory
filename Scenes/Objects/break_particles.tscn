@@ -1,7 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://dhv67jqqro4n6"]
+[gd_scene load_steps=5 format=3 uid="uid://dhv67jqqro4n6"]
 
 [ext_resource type="Script" path="res://Scenes/Objects/break_particles.gd" id="1_ml7ao"]
 [ext_resource type="Texture2D" uid="uid://bwwaar1yvhwo7" path="res://Assets/Sprites/green_particle.png" id="2_32k8m"]
+
+[sub_resource type="Curve" id="Curve_0pw2t"]
+max_value = 100.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 0), 0.0, 0.0, 0, 0, Vector2(1, 16.8421), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="Curve" id="Curve_0arvg"]
 _data = [Vector2(0, 5.07368), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -20,8 +25,9 @@ spread = 180.0
 gravity = Vector2(0, 0)
 initial_velocity_min = 90.91
 initial_velocity_max = 90.91
-damping_min = 44.444
-damping_max = 44.444
+damping_min = 100.0
+damping_max = 100.0
+damping_curve = SubResource("Curve_0pw2t")
 scale_amount_curve = SubResource("Curve_0arvg")
 
 [node name="Timer" type="Timer" parent="."]

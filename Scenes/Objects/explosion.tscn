@@ -1,0 +1,150 @@
+[gd_scene load_steps=11 format=3 uid="uid://r6laaxx0ef8h"]
+
+[ext_resource type="Script" path="res://Scenes/Objects/explosion.gd" id="1_mnd1v"]
+[ext_resource type="Texture2D" uid="uid://cte6gisina1qf" path="res://Assets/Sprites/ball2.png" id="2_7nksv"]
+[ext_resource type="Texture2D" uid="uid://br63sxt6xp8yb" path="res://Assets/Sprites/ball.png" id="2_gnh25"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rhx68"]
+radius = 80.0
+
+[sub_resource type="Curve" id="Curve_rsjdp"]
+max_value = 100.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 0), 0.0, 0.0, 0, 0, Vector2(1, 16.8421), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_p8o0t"]
+_data = [Vector2(0, 5.07368), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_m4ug5"]
+offsets = PackedFloat32Array(0.509934, 0.516556)
+colors = PackedColorArray(0.588235, 0.984314, 0.780392, 1, 0.996078, 1, 0.941176, 1)
+
+[sub_resource type="Animation" id="Animation_d6h8o"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_5vpwl"]
+resource_name = "spawn"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.5, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.6)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.5, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.6)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.9, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ata3s"]
+_data = {
+"RESET": SubResource("Animation_d6h8o"),
+"spawn": SubResource("Animation_5vpwl")
+}
+
+[node name="explosion" type="Node2D"]
+script = ExtResource("1_mnd1v")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_7nksv")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_rhx68")
+disabled = true
+
+[node name="CPUParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 24
+lifetime = 0.8
+one_shot = true
+preprocess = 0.05
+explosiveness = 1.0
+texture = ExtResource("2_gnh25")
+emission_shape = 1
+emission_sphere_radius = 15.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 160.0
+initial_velocity_max = 210.0
+damping_min = 100.0
+damping_max = 100.0
+damping_curve = SubResource("Curve_rsjdp")
+scale_amount_max = 2.5
+scale_amount_curve = SubResource("Curve_p8o0t")
+color_initial_ramp = SubResource("Gradient_m4ug5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "spawn"
+libraries = {
+"": SubResource("AnimationLibrary_ata3s")
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

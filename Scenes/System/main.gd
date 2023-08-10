@@ -6,11 +6,14 @@ const DEFAULT_ENEMY_SCENE = preload("res://Scenes/Objects/enemy.tscn")
 const QUICK_ENEMY_SCENE = preload('res://Scenes/Objects/enemy_quick.tscn')
 
 const BLOCK_SCENE = preload("res://Scenes/Objects/block.tscn")
+const EXPLOSION_SCENE = preload("res://Scenes/Objects/explosion.tscn")
 const PARTICLE_SCENE = preload("res://Scenes/Objects/break_particles.tscn")
 const ENEMY_PARTICLE_SCENE = preload("res://Scenes/Objects/enemy_break_particles.tscn")
 const LIFE_PARTICLE_SCENE = preload("res://Scenes/Objects/life_break_particles.tscn")
 const BLOCK_SIZE = 16
 const CENTER = Vector2.ZERO
+#------------------------------------------------
+var testing = true # for testing
 var game_started = false
 var grid_size = Vector2(11,11)
 var separation = 5 # in pixels, between blocks
@@ -18,6 +21,8 @@ var cell_size = 16
 var _grid : Grid
 #---------------------------------------------
 # active variables
+var use_explosion = false
+var explosion_radius = 32
 var grid_to_block = {}
 var turning = false # used to handle turning
 var grow_cd = false # used for grow cd
@@ -68,8 +73,8 @@ func augment_selected(augment):
 			# create max layer
 			var max_layer = 1
 			for block in $Grid.get_children():
-				max_layer = max(max_layer, block.grid_p.x)
-				max_layer = max(max_layer, block.grid_p.y)
+				max_layer = max(max_layer, abs(block.grid_p.x))
+				max_layer = max(max_layer, abs(block.grid_p.y))
 			# spawn blocks in max layer
 			var positions = []
 			for i in range(-max_layer, max_layer+1):
@@ -86,6 +91,9 @@ func augment_selected(augment):
 				new_block.position = _grid.calculate_map_position(p)
 				grid_to_block[p] = new_block
 				$Grid.add_child(new_block)
+		Augments.AUGMENTS.EXPLOSION:
+			use_explosion = true
+			explosion_radius = 16 * (Augments.augment_resources[augment].count + 1)
 
 func set_turning():
 	turning = false
@@ -93,6 +101,11 @@ func set_turning():
 func turn_clockwise():
 	if turning:
 		return
+	var shield_count = Augments.augment_resources[Augments.AUGMENTS.SHIELD].count
+	if shield_count > 0:
+		for block in $Grid.get_children():
+			block.shield_timer.wait_time = 0.5 * shield_count
+			block.shield_active = true
 	check_deep_clean()
 	Global.play_sfx('snap.wav', -2, true)
 	turning = true
@@ -103,6 +116,11 @@ func turn_clockwise():
 func turn_counterclockwise():
 	if turning:
 		return
+	var shield_count = Augments.augment_resources[Augments.AUGMENTS.SHIELD].count
+	if shield_count > 0:
+		for block in $Grid.get_children():
+			block.shield_timer.wait_time = 0.5 * shield_count
+			block.shield_active = true
 	check_deep_clean()
 	Global.play_sfx('snap.wav', -2, true)
 	turning = true
@@ -127,10 +145,24 @@ func grow(grid_p):
 	if grid_p == Vector2.ZERO and !game_started:
 		$Timers/SpawnTimer.start()
 		game_started = true
-		
+	
+	var pattern = Augments.augment_resources[Augments.AUGMENTS.GROWTH_PATTERN].count
 	var positions = [grid_p]
 	for dir in Constants.DIRECTIONS.values():
 		positions.append(grid_p + dir)
+	if pattern >= 1:
+		for dir in Constants.DIRECTIONS_V2.values():
+			positions.append(grid_p + dir)
+	if pattern >= 2:
+		for dir in Constants.DIRECTIONS_V3.values():
+			positions.append(grid_p + dir)
+	if pattern >= 3:
+		for dir in Constants.DIRECTIONS_V4.values():
+			positions.append(grid_p + dir)
+	if pattern >= 4:
+		for dir in Constants.DIRECTIONS_V5.values():
+			positions.append(grid_p + dir)
+		
 	for p in positions:
 		if !_grid.is_within_bounds(p):
 			continue
@@ -152,6 +184,9 @@ func grow(grid_p):
 	$Timers/GrowCDTimer.start()
 			
 func _on_lose_life():
+	if testing:
+		return
+	
 	lives -= 1
 	var life = $UI/Lives.get_child(lives)
 	life.visible = false
@@ -183,7 +218,7 @@ func break_enemy(enemy):
 	enemy.get_parent().queue_free()
 	
 func clear_enemies():
-	Global.play_sfx('kick.wav', 4, true)
+	Global.play_sfx('kick2.wav', 4, true)
 	for enemy in get_tree().get_nodes_in_group('enemies'):
 		var particles = ENEMY_PARTICLE_SCENE.instantiate()
 		particles.global_position = enemy.global_position
@@ -202,10 +237,17 @@ func clear_block(block):
 	
 	if grid_to_block.has(block.grid_p):
 		grid_to_block.erase(block.grid_p)
-	var particles = PARTICLE_SCENE.instantiate()
-	particles.global_position = block.global_position
-	$Particles.add_child(particles)
-	block.queue_free()
+		
+	if use_explosion:
+		var explosion = EXPLOSION_SCENE.instantiate()
+		explosion.set_deferred('global_position', block.global_position)
+		$Effects.call_deferred('add_child', explosion)
+	else:
+		var particles = PARTICLE_SCENE.instantiate()
+		particles.global_position = block.global_position
+		$Particles.add_child(particles)
+	
+	block.call_deferred('queue_free')
 	
 # from main block, flood fill. remove any blocks that arent in the flood fill.
 func break_stray_blocks():
@@ -251,6 +293,11 @@ func spawn_enemy():
 	var path = enemy.create_path(start_p, end_p)
 	$Enemies.add_child(path)
 	path.add_child(enemy)
+	
+# for testing
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_accept"):
+		spawn_enemy()
 	
 func _on_spawn_timer_timeout():
 	spawn_enemy()

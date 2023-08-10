@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://di563ikhs1x8e"]
+[gd_scene load_steps=16 format=3 uid="uid://di563ikhs1x8e"]
 
 [ext_resource type="Script" path="res://Scenes/Objects/main_block.gd" id="1_amhtn"]
 [ext_resource type="Texture2D" uid="uid://d4lxe6nydd7sl" path="res://Assets/Sprites/main_block.png" id="1_v0xge"]
 [ext_resource type="Shader" path="res://Scenes/Objects/outline.gdshader" id="2_o6rh0"]
 [ext_resource type="Shader" path="res://Scenes/Objects/solid_color.gdshader" id="2_ohubc"]
+[ext_resource type="Texture2D" uid="uid://byolidq1o62tg" path="res://Assets/Sprites/block_shield.png" id="5_bgqke"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yi1y3"]
 shader = ExtResource("2_o6rh0")
@@ -172,6 +173,13 @@ material = SubResource("ShaderMaterial_aaivi")
 position = Vector2(3, 3)
 texture = ExtResource("1_v0xge")
 
+[node name="shield" type="Sprite2D" parent="Sprite2D"]
+visible = false
+texture = ExtResource("5_bgqke")
+
+[node name="Timer" type="Timer" parent="Sprite2D/shield"]
+one_shot = true
+
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
@@ -188,10 +196,12 @@ libraries = {
 collision_layer = 2
 collision_mask = 2
 input_pickable = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("RectangleShape2D_vg4p8")
 
+[connection signal="timeout" from="Sprite2D/shield/Timer" to="." method="_on_timer_timeout"]
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

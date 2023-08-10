@@ -4,13 +4,22 @@ var grid_p : Vector2
 var breaking = false
 var spawning = false
 var fortify_count = 0
+var shield_active = false : set = _set_shield_active
 
 var _tween
 
+@onready var shield_timer = $Sprite2D/shield/Timer
 @onready var anim_player = $AnimationPlayer
 
-func _ready():
-	pass
+
+func _set_shield_active(value):
+	shield_active = value
+	if shield_active:
+		$Sprite2D/shield.visible = true
+		$Sprite2D/shield/Timer.start()
+	else:
+		$Sprite2D/shield.visible = false
+		$Sprite2D/shield/Timer.stop()
 
 # called externally
 func grow():
@@ -57,8 +66,8 @@ func _on_area_2d_input_event(viewport, event, shape_idx):
 		#$AnimationPlayer.play_backwards("click")
 		
 	# temp
-	elif event.is_action_pressed('right_click'):
-		SignalBus.emit_signal('break_block', grid_p)
+	#elif event.is_action_pressed('right_click'):
+	#	SignalBus.emit_signal('break_block', grid_p)
 
 
 # animation
@@ -73,15 +82,16 @@ func _on_area_2d_mouse_exited():
 	$AnimationPlayer.play("default")
 
 
-func _on_animation_player_animation_finished(anim_name):
-	pass
-
-
 func _on_hurtbox_body_entered(body):
 	pass
 
 
 func _on_hurtbox_area_entered(area):
+	if shield_active:
+		SignalBus.emit_signal('break_enemy', area.get_parent())
+		self.shield_active = false
+		return
+	
 	if fortify_count <= 0:
 		SignalBus.emit_signal('break_enemy', area.get_parent())
 		SignalBus.emit_signal('break_block', grid_p)
@@ -89,3 +99,9 @@ func _on_hurtbox_area_entered(area):
 		SignalBus.emit_signal('break_enemy', area.get_parent())
 		fortify_count -= 1
 		break_fortify()
+
+#shield timer
+func _on_timer_timeout():
+	self.shield_active = false
+
+

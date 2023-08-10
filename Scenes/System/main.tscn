@@ -140,7 +140,7 @@ shader_parameter/add_margins = false
 process_mode = 1
 script = ExtResource("1_gatrr")
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Effects" type="Node2D" parent="."]
 
 [node name="Timers" type="Node2D" parent="."]
 script = ExtResource("2_2s61n")

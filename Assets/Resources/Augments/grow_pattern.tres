@@ -9,5 +9,5 @@ pic = ExtResource("1_f0bn0")
 name = "DYNAMIC PARTITIONS"
 description = "Create more blocks"
 secondary_d = "Create more blocks"
-limit = -1
+limit = 4
 count = 0

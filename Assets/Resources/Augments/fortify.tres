@@ -9,5 +9,5 @@ pic = ExtResource("1_miuox")
 name = "SYSTEM BACKUP"
 description = "Blocks can be fortified"
 secondary_d = "Blocks can be fortified 1 more time"
-limit = -1
+limit = 5
 count = 0
