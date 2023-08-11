@@ -6,6 +6,7 @@ const DEFAULT_ENEMY_SCENE = preload("res://Scenes/Objects/enemy.tscn")
 const QUICK_ENEMY_SCENE = preload('res://Scenes/Objects/enemy_quick.tscn')
 
 const BLOCK_SCENE = preload("res://Scenes/Objects/block.tscn")
+const ORB_SCENE = preload("res://Scenes/Objects/orb.tscn")
 const EXPLOSION_SCENE = preload("res://Scenes/Objects/explosion.tscn")
 const PARTICLE_SCENE = preload("res://Scenes/Objects/break_particles.tscn")
 const ENEMY_PARTICLE_SCENE = preload("res://Scenes/Objects/enemy_break_particles.tscn")
@@ -40,6 +41,7 @@ var _flood_queue = []
 func _ready():
 	done_turning.connect(set_turning)
 	SignalBus.lose_life.connect(_on_lose_life)
+	SignalBus.gain_life.connect(_on_gain_life)
 	SignalBus.grow.connect(grow)
 	SignalBus.break_block.connect(break_block)
 	SignalBus.break_enemy.connect(break_enemy)
@@ -139,8 +141,8 @@ func check_deep_clean():
 		clear_enemies()
 	
 # if position is open, create a new block. else, call grow on the block.
-func grow(grid_p):
-	if grow_cd:
+func grow(grid_p, from_orb = false):
+	if grow_cd and !from_orb:
 		return
 	if grid_p == Vector2.ZERO and !game_started:
 		$Timers/SpawnTimer.start()
@@ -175,13 +177,19 @@ func grow(grid_p):
 			new_block.grid_p = p
 			new_block.position = _grid.calculate_map_position(p)
 			grid_to_block[p] = new_block
-			$Grid.add_child(new_block)
+			$Grid.call_deferred('add_child', new_block)
 			
 	Global.play_sfx('grow.wav', 1.0, true)
 	grid_to_block[grid_p].anim_player.play_backwards('click')
 	grow_cd = true
 	$UI/TextureProgressBar/AnimationPlayer.play("stretch")
 	$Timers/GrowCDTimer.start()
+			
+func _on_gain_life():
+	lives += 1
+	lives = clampi(lives, 0, 5)
+	var life = $UI/Lives.get_child(lives - 1)
+	life.visible = true
 			
 func _on_lose_life():
 	if testing:
@@ -234,6 +242,13 @@ func break_block(grid_p):
 	
 # version that ignores stray blocks
 func clear_block(block):
+	var garbage_count = Augments.augment_resources[Augments.AUGMENTS.GARBAGE_COLLECTION].count
+	if garbage_count > 0:
+		var chance = 0.03 + (0.03 * garbage_count)
+		if randf() < chance:
+			var orb = ORB_SCENE.instantiate()
+			orb.set_deferred('global_position', block.global_position)
+			$Effects.call_deferred('add_child', orb)
 	
 	if grid_to_block.has(block.grid_p):
 		grid_to_block.erase(block.grid_p)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dri68rail1lt8"
-path="res://.godot/imported/extend_augment.png-c200d386d11a0fa4245650452c00e7c1.ctex"
+uid="uid://dgwsmj0e8hwwu"
+path="res://.godot/imported/garbage_collection_augment.png-de52ed770016655f2b5f72935db974a1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Augments/extend_augment.png"
-dest_files=["res://.godot/imported/extend_augment.png-c200d386d11a0fa4245650452c00e7c1.ctex"]
+source_file="res://Assets/Sprites/Augments/garbage_collection_augment.png"
+dest_files=["res://.godot/imported/garbage_collection_augment.png-de52ed770016655f2b5f72935db974a1.ctex"]
 
 [params]
 

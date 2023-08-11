@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="Augment" load_steps=3 format=3 uid="uid://c36q7kcqk7x03"]
 
-[ext_resource type="Texture2D" uid="uid://yxkf8c1j0c23" path="res://Assets/Sprites/Augments/compact_augment.png" id="1_rrlpp"]
+[ext_resource type="Texture2D" uid="uid://65snefdgwupb" path="res://Assets/Sprites/Augments/multithread_augment.png" id="1_x652i"]
 [ext_resource type="Script" path="res://Assets/Resources/Augment_Description.gd" id="2_qcwkn"]
 
 [resource]
 script = ExtResource("2_qcwkn")
-pic = ExtResource("1_rrlpp")
+pic = ExtResource("1_x652i")
 name = "MULTITHREADING"
 description = "Reduce rotation cooldown by 25%"
-secondary_d = "Further reduce rotation cooldown by 20%"
+secondary_d = "Further reduce rotation cooldown by 25%"
 limit = -1
 count = 0

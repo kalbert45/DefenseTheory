@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="Augment" load_steps=3 format=3 uid="uid://7dueb58uia7h"]
 
-[ext_resource type="Texture2D" uid="uid://yxkf8c1j0c23" path="res://Assets/Sprites/Augments/compact_augment.png" id="1_44fdq"]
+[ext_resource type="Texture2D" uid="uid://dgrd528emx06h" path="res://Assets/Sprites/Augments/deep_clean_augment.png" id="1_b8tqt"]
 [ext_resource type="Script" path="res://Assets/Resources/Augment_Description.gd" id="2_4fjo3"]
 
 [resource]
 script = ExtResource("2_4fjo3")
-pic = ExtResource("1_44fdq")
-name = "DEEP CLEAN"
+pic = ExtResource("1_b8tqt")
+name = "FULL SCAN"
 description = "Clears enemies every 10 rotations"
 secondary_d = "-1 rotation requirement"
 limit = 5

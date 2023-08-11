@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8y68k3kl8gkf"
-path="res://.godot/imported/fortify_augment.png-a0242049228b5223f48715e694cb33f4.ctex"
+uid="uid://b52o2kj4yg1ji"
+path="res://.godot/imported/heart_orb-sheet.png-32b1a1aab57a932fb3d38fe81badedc9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Augments/fortify_augment.png"
-dest_files=["res://.godot/imported/fortify_augment.png-a0242049228b5223f48715e694cb33f4.ctex"]
+source_file="res://Assets/Sprites/heart_orb-sheet.png"
+dest_files=["res://.godot/imported/heart_orb-sheet.png-32b1a1aab57a932fb3d38fe81badedc9.ctex"]
 
 [params]
 

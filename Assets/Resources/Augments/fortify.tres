@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="Augment" load_steps=3 format=3 uid="uid://7w3fgd5ky6ph"]
 
-[ext_resource type="Texture2D" uid="uid://yxkf8c1j0c23" path="res://Assets/Sprites/Augments/compact_augment.png" id="1_miuox"]
+[ext_resource type="Texture2D" uid="uid://8y68k3kl8gkf" path="res://Assets/Sprites/Augments/backup_augment.png" id="1_pa66t"]
 [ext_resource type="Script" path="res://Assets/Resources/Augment_Description.gd" id="2_rbi8s"]
 
 [resource]
 script = ExtResource("2_rbi8s")
-pic = ExtResource("1_miuox")
+pic = ExtResource("1_pa66t")
 name = "SYSTEM BACKUP"
 description = "Blocks can be fortified"
 secondary_d = "Blocks can be fortified 1 more time"

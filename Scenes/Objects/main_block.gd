@@ -29,6 +29,11 @@ func _on_area_2d_input_event(viewport, event, shape_idx):
 		SignalBus.emit_signal('grow', Vector2.ZERO)
 		#$AnimationPlayer.play_backwards("click")
 
+func emit_grow():
+	SignalBus.emit_signal('grow', grid_p, true)
+	
+func emit_gain():
+	SignalBus.emit_signal('gain_life')
 
 func _on_area_2d_mouse_exited():
 	$Sprite2D.material.set_shader_parameter('width', 0)

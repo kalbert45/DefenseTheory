@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="Augment" load_steps=3 format=3 uid="uid://b4n5j76cv8ovs"]
 
-[ext_resource type="Texture2D" uid="uid://yxkf8c1j0c23" path="res://Assets/Sprites/Augments/compact_augment.png" id="1_qo0mh"]
+[ext_resource type="Texture2D" uid="uid://e2whws0w2awf" path="res://Assets/Sprites/Augments/virtual_ram_augment.png" id="1_cark8"]
 [ext_resource type="Script" path="res://Assets/Resources/Augment_Description.gd" id="2_ds6um"]
 
 [resource]
 script = ExtResource("2_ds6um")
-pic = ExtResource("1_qo0mh")
-name = "VIRTUAL RAM"
+pic = ExtResource("1_cark8")
+name = "FIREWALL"
 description = "Temporarily guards rotating blocks"
 secondary_d = "Guards blocks for longer"
 limit = -1

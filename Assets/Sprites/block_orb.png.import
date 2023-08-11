@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://65snefdgwupb"
-path="res://.godot/imported/rotate_cd_reduc_augment.png-f2701e5953969772251fede7a007ef46.ctex"
+uid="uid://cq3bb0l43clse"
+path="res://.godot/imported/block_orb.png-ee528edd0e48576671f9327e3cc985b0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Augments/rotate_cd_reduc_augment.png"
-dest_files=["res://.godot/imported/rotate_cd_reduc_augment.png-f2701e5953969772251fede7a007ef46.ctex"]
+source_file="res://Assets/Sprites/block_orb.png"
+dest_files=["res://.godot/imported/block_orb.png-ee528edd0e48576671f9327e3cc985b0.ctex"]
 
 [params]
 

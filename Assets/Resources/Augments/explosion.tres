@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="Augment" load_steps=3 format=3 uid="uid://d0f6sgd7r1lyb"]
 
-[ext_resource type="Texture2D" uid="uid://yxkf8c1j0c23" path="res://Assets/Sprites/Augments/compact_augment.png" id="1_qypxy"]
+[ext_resource type="Texture2D" uid="uid://bdn52utstsf8v" path="res://Assets/Sprites/Augments/kill_process_augment.png" id="1_24vlr"]
 [ext_resource type="Script" path="res://Assets/Resources/Augment_Description.gd" id="2_h2xew"]
 
 [resource]
 script = ExtResource("2_h2xew")
-pic = ExtResource("1_qypxy")
+pic = ExtResource("1_24vlr")
 name = "KILL SWITCH"
 description = "Broken blocks eliminate nearby viruses"
 secondary_d = "Increase elimination radius by 50%"

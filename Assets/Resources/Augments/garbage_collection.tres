@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="Augment" load_steps=2 format=3 uid="uid://ibhpscljvv0q"]
+[gd_resource type="Resource" script_class="Augment" load_steps=3 format=3 uid="uid://ibhpscljvv0q"]
 
+[ext_resource type="Texture2D" uid="uid://dgwsmj0e8hwwu" path="res://Assets/Sprites/Augments/garbage_collection_augment.png" id="1_c4d3p"]
 [ext_resource type="Script" path="res://Assets/Resources/Augment_Description.gd" id="1_rnpih"]
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_rnpih")
+pic = ExtResource("1_c4d3p")
 name = "GARBAGE COLLECTION"
 description = "Blocks can drop orbs upon breaking"
-secondary_d = "Chance is increased by 2%"
+secondary_d = "Chance is increased by 3%"
 limit = 3
 count = 0

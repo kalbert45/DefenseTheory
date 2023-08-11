@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="Augment" load_steps=3 format=3 uid="uid://cdr3yjh8dfv78"]
 
-[ext_resource type="Texture2D" uid="uid://yxkf8c1j0c23" path="res://Assets/Sprites/Augments/compact_augment.png" id="1_y4tfj"]
+[ext_resource type="Texture2D" uid="uid://dri68rail1lt8" path="res://Assets/Sprites/Augments/paging_augment.png" id="1_noi1b"]
 [ext_resource type="Script" path="res://Assets/Resources/Augment_Description.gd" id="2_3hdjp"]
 
 [resource]
 script = ExtResource("2_3hdjp")
-pic = ExtResource("1_y4tfj")
+pic = ExtResource("1_noi1b")
 name = "PAGING"
 description = "Extends max block threshold"
 secondary_d = "Further increases maximum block threshold"
