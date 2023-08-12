@@ -4,6 +4,7 @@ signal done_turning
 
 const DEFAULT_ENEMY_SCENE = preload("res://Scenes/Objects/enemy.tscn")
 const QUICK_ENEMY_SCENE = preload('res://Scenes/Objects/enemy_quick.tscn')
+const QUICKX_ENEMY_SCENE = preload("res://Scenes/Objects/enemy_quicker.tscn")
 
 const BLOCK_SCENE = preload("res://Scenes/Objects/block.tscn")
 const ORB_SCENE = preload("res://Scenes/Objects/orb.tscn")
@@ -14,7 +15,7 @@ const LIFE_PARTICLE_SCENE = preload("res://Scenes/Objects/life_break_particles.t
 const BLOCK_SIZE = 16
 const CENTER = Vector2.ZERO
 #------------------------------------------------
-var testing = true # for testing
+var testing = false # for testing
 var game_started = false
 var grid_size = Vector2(11,11)
 var separation = 5 # in pixels, between blocks
@@ -39,6 +40,7 @@ var _flood_array = []
 var _flood_queue = []
 
 func _ready():
+	$Timers.spawn_enemy.connect(spawn_enemy)
 	done_turning.connect(set_turning)
 	SignalBus.lose_life.connect(_on_lose_life)
 	SignalBus.gain_life.connect(_on_gain_life)
@@ -146,6 +148,7 @@ func grow(grid_p, from_orb = false):
 		return
 	if grid_p == Vector2.ZERO and !game_started:
 		$Timers/SpawnTimer.start()
+		$Timers/StageTimer.start()
 		game_started = true
 	
 	var pattern = Augments.augment_resources[Augments.AUGMENTS.GROWTH_PATTERN].count
@@ -180,7 +183,9 @@ func grow(grid_p, from_orb = false):
 			$Grid.call_deferred('add_child', new_block)
 			
 	Global.play_sfx('grow.wav', 1.0, true)
-	grid_to_block[grid_p].anim_player.play_backwards('click')
+	if grid_to_block[grid_p].anim_player:
+		if !grid_to_block[grid_p].anim_player.is_playing():
+			grid_to_block[grid_p].anim_player.play_backwards('click')
 	grow_cd = true
 	$UI/TextureProgressBar/AnimationPlayer.play("stretch")
 	$Timers/GrowCDTimer.start()
@@ -208,22 +213,27 @@ func _on_lose_life():
 func lose_game():
 	#Global.play_sfx('kick.wav', 1.0, true)
 	$Timers/SpawnTimer.stop()
+	$Timers/StageTimer.stop()
 	
 	for block in $Grid.get_children():
 		if block.grid_p != Vector2.ZERO:
 			clear_block(block)
 			
 	for enemy in get_tree().get_nodes_in_group('enemies'):
-		break_enemy(enemy)
+		clear_enemies()
 			
 func break_enemy(enemy):
 	Global.play_sfx('rim2.wav', 4, true)
-	var particles = ENEMY_PARTICLE_SCENE.instantiate()
-	particles.global_position = enemy.global_position
-	particles.color = enemy.color
-	$Particles.add_child(particles)
-	$UI/ExpBar.gain_exp(enemy.exp)
-	enemy.get_parent().queue_free()
+	enemy.life -= 1
+	if enemy.life > 0:
+		enemy.push_back()
+	else:
+		var particles = ENEMY_PARTICLE_SCENE.instantiate()
+		particles.global_position = enemy.global_position
+		particles.color = enemy.color
+		$Particles.add_child(particles)
+		$UI/ExpBar.gain_exp(enemy.exp)
+		enemy.get_parent().queue_free()
 	
 func clear_enemies():
 	Global.play_sfx('kick2.wav', 4, true)
@@ -293,15 +303,22 @@ func _flood_fill(node):
 			clear_block(block)
 
 # for now, spawn at random point, random enemy
-func spawn_enemy():
-	var rand = randi_range(0, 1)
+func spawn_enemy(enemy_type, life, progress_pos, rand):
 	var enemy
-	match rand:
-		0:
+	match enemy_type:
+		Constants.ENEMY_TYPES.DEFAULT:
 			enemy= DEFAULT_ENEMY_SCENE.instantiate()
-		1:
+		Constants.ENEMY_TYPES.QUICK:
 			enemy= QUICK_ENEMY_SCENE.instantiate()
-	$SpawnPoints/PathFollow2D.progress_ratio = randf_range(0.0, 1.0)
+		Constants.ENEMY_TYPES.QUICKER:
+			enemy = QUICKX_ENEMY_SCENE.instantiate()
+	enemy.life = life
+	if progress_pos:
+		$SpawnPoints/PathFollow2D.progress_ratio = progress_pos
+	else:
+		$SpawnPoints/PathFollow2D.progress_ratio = randf_range(0.0, 1.0)
+	if rand:
+		enemy.rand = false
 	var start_p = $SpawnPoints/PathFollow2D.global_position
 	var end_p = $Grid/main_block.global_position
 	
@@ -310,12 +327,12 @@ func spawn_enemy():
 	path.add_child(enemy)
 	
 # for testing
-func _unhandled_input(event):
-	if event.is_action_pressed("ui_accept"):
-		spawn_enemy()
+#func _unhandled_input(event):
+#	if event.is_action_pressed("ui_accept"):
+#		spawn_enemy()
 	
-func _on_spawn_timer_timeout():
-	spawn_enemy()
+#func _on_spawn_timer_timeout():
+#	spawn_enemy()
 
 func _on_grow_cd_timer_timeout():
 	grow_cd = false

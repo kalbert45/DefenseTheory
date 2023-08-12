@@ -69,6 +69,7 @@ func _on_area_2d_input_event(viewport, event, shape_idx):
 	#elif event.is_action_pressed('right_click'):
 	#	SignalBus.emit_signal('break_block', grid_p)
 func emit_grow():
+	$AnimationPlayer.is_playing()
 	SignalBus.emit_signal('grow', grid_p, true)
 	
 func emit_gain():

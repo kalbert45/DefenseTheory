@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://blwbevi5gvkvy"]
 
 [ext_resource type="Script" path="res://Scenes/Objects/enemy_quick.gd" id="1_5en4m"]
-[ext_resource type="Texture2D" uid="uid://gpb67om15yqa" path="res://Assets/Sprites/enemy_quick.png" id="2_6b6em"]
 [ext_resource type="Texture2D" uid="uid://binh1bwjinj1f" path="res://Assets/Sprites/enemy.png" id="2_oowyx"]
+[ext_resource type="Texture2D" uid="uid://cbijw62hltivr" path="res://Assets/Sprites/enemy_quick-sheet.png" id="2_w4gm4"]
 [ext_resource type="Shader" path="res://Scenes/Objects/solid_color.gdshader" id="3_c0psj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xktom"]
@@ -19,7 +19,8 @@ loop = false
 script = ExtResource("1_5en4m")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_6b6em")
+texture = ExtResource("2_w4gm4")
+hframes = 3
 
 [node name="shadow" type="Sprite2D" parent="Sprite2D"]
 visible = false

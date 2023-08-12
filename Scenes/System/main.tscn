@@ -156,6 +156,10 @@ one_shot = true
 wait_time = 5.0
 one_shot = true
 
+[node name="StageTimer" type="Timer" parent="Timers"]
+wait_time = 60.0
+one_shot = true
+
 [node name="SpawnPoints" type="Path2D" parent="."]
 curve = SubResource("Curve2D_iladu")
 
@@ -368,8 +372,9 @@ texture_progress = ExtResource("19_30ptx")
 texture_progress_offset = Vector2(2, 2)
 script = ExtResource("20_t4giw")
 
-[connection signal="timeout" from="Timers/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="timeout" from="Timers/SpawnTimer" to="Timers" method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="Timers/GrowCDTimer" to="." method="_on_grow_cd_timer_timeout"]
 [connection signal="timeout" from="Timers/TurnCDTimer" to="." method="_on_turn_cd_timer_timeout"]
+[connection signal="timeout" from="Timers/StageTimer" to="Timers" method="_on_stage_timer_timeout"]
 [connection signal="pressed" from="UI/LeftButton" to="." method="_on_left_button_pressed"]
 [connection signal="pressed" from="UI/RightButton" to="." method="_on_right_button_pressed"]
